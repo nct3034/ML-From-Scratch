@@ -1,0 +1,28 @@
+import argparse
+import os
+from utils.data_loader import load_data
+from preprocessing.encoders import LabelEncoder
+from utils.metrics import ClassificationMetrics
+
+def main():
+    parser = argparse.ArgumentParser(description="Run ML Models from Scratch")
+    parser.add_argument("--model", type=str, required=True, help="Name of the model to run (e.g., decision_tree)")
+    parser.add_argument("--data", type=str, required=True, help="Path to the dataset (e.g., data/play_tennis.csv)")
+
+    args = parser.parse_args()
+    print("========================================")
+    print(f" Initializing Model: {args.model}")
+    print(f" Loading Dataset: {args.data}")
+    print("========================================\n")
+
+    x, y = load_data(args.data)
+    if x is None or y is None:
+        print("Execution aborted due to data loading error.")
+        return
+
+    # At this point, you would add your LabelEncoder loop for X and y,
+    # then instantiate your selected model (like Decision Tree) based on args.model,
+    # and finally grade it using ClassificationMetrics.
+
+if __name__ == "__main__":
+    main()
