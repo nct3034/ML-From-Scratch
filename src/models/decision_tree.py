@@ -39,17 +39,34 @@ class DecisionTree(BaseModel):
         """
         Recursive function to build the tree branches.
         """
-        # TODO: Step 1 - Check stopping criteria (max_depth reached, pure node, or too few samples)
+        # Step 1 - Check stopping criteria (max_depth reached, pure node, or too few samples)
         # If stopping criteria met, return a leaf Node containing the most common label in y
+        if depth >= self.max_depth or len(y) < self.min_samples_splits or (len(np.unique(y)) == 1):
+            leaf_value = self._most_common_label(y)
+            return Node(value= leaf_value)
+
+        # Step 2 - Find the best split using _best_split()
+        feature_idx, thresh = self._best_split(x, y)
         
-        # TODO: Step 2 - Find the best split using _best_split()
+        # Step 3 - If a valid split is found, divide x and y into left and right datasets
+        if feature_idx is not None and thresh is not None:
+            x_column = x[:, feature_idx]
+            left_idx, right_idx = self._split(x_column, thresh)
+
+            x_left, y_left = x[left_idx, :], y[left_idx]
+            x_right, y_right = x[right_idx, :], y[right_idx]
+
+            # Step 4 - Recursively call _grow_tree on the left and right datasets
+            left = self._grow_tree(x_left, y_left, depth + 1)
+            right = self._grow_tree(x_right, y_right, depth + 1)
+
+            # Step 5 - Return a new Node containing the best feature, threshold, left_child, and right_child
+            return Node(feature_index=feature_idx, threshold=thresh, left=left, right=right)
+
+        # Fallback: return Node if cannot split
+        leaf_value = self._most_common_label(y)
+        return Node(value=leaf_value)
         
-        # TODO: Step 3 - If a valid split is found, divide X and y into left and right datasets
-        
-        # TODO: Step 4 - Recursively call _grow_tree on the left and right datasets
-        
-        # TODO: Step 5 - Return a new Node containing the best feature, threshold, left_child, and right_child
-        pass
 
     def _best_split(self, x, y):
         """
