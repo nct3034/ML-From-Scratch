@@ -27,12 +27,6 @@ def main():
     # then instantiate your selected model (like Decision Tree) based on args.model,
     # and finally grade it using ClassificationMetrics.
 
-    label_encoder = LabelEncoder()
-    y_encoded = label_encoder.fit_transform(y)
-
-    tree = DecisionTree()
-    dataset_entropy = tree._entropy(y_encoded)
-    print(f"Entropy of dataset: {dataset_entropy}")
 
 if __name__ == "__main__":
     main()

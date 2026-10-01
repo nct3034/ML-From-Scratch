@@ -55,19 +55,41 @@ class DecisionTree(BaseModel):
         """
         Iterates through all features and values to find the split with the highest Information Gain.
         """
-        # TODO: Loop through every column in X
-        # TODO: Loop through every unique value in that column
-        # TODO: Calculate information gain for each combination
-        # TODO: Return the feature index and threshold that produced the best information gain
-        pass
+        best_ig = -1
+        best_feature_idx = None
+        best_thresh = None
+
+        n_feature = x.shape[1]
+        # Loop through every column in x
+        for col_idx in range(n_feature):
+            x_column = x[: col_idx]
+
+            # Loop through every unique value in that column
+            thresholds = np.unique(x_column)
+            for threshold in thresholds:
+                # Calculate information gain for each combination
+                ig = self._information_gain(y, x_column, threshold)
+                if ig > best_ig:
+                    best_ig = ig
+                    best_feature_idx = col_idx
+                    best_thresh = threshold
+        
+        # Return the feature index and threshold that produced the best information gain
+        return best_feature_idx, best_thresh
+        
+
 
     def _split(self, x_column, split_thresh):
         """
         Helper method to divide data indices based on a threshold.
         """
-        # TODO: Return the indices of rows where the column value matches the threshold (or is <= for numbers)
-        # TODO: Return the indices of rows where it does not match
-        pass
+        # Return the indices of rows where the column value matches the threshold (or is <= for numbers)
+        left_idxs = np.argwhere(x_column <= split_thresh).flatten()
+        # Return the indices of rows where it does not match
+        right_idxs = np.argwhere(x_column > split_thresh).flatten()
+
+        return left_idxs, right_idxs
+        
 
     def _entropy(self, y):
         """
@@ -76,21 +98,38 @@ class DecisionTree(BaseModel):
         # Calculate the proportion of each class in y
         labels, counts = np.unique(y,return_counts=True)
         total_samples = len(y)
-        proportions = counts / total_samples
+        p = counts / total_samples
 
         # Apply the entropy formula: -sum(p * log2(p))
-        return -np.sum(proportions * np.log2(proportions))
+        return -np.sum(p * np.log2(p))
         
 
     def _information_gain(self, y, x_column, split_thresh):
         """
         Calculates how much a split reduces entropy.
         """
-        # TODO: Calculate parent entropy using _entropy(y)
-        # TODO: Split the data using _split()
-        # TODO: Calculate the weighted average entropy of the children
-        # TODO: Return (parent_entropy - child_entropy)
-        pass
+        # Calculate parent entropy using _entropy(y)
+        parent_entropy = self._entropy(y)
+        
+        # Split the data using _split()
+        left_idx, right_idx = self._split(x_column, split_thresh)
+
+        # Calculate the weighted average entropy of the children
+        y_left = y[left_idx]
+        y_right = y[right_idx]
+
+        if len(y_left) == 0 or len(y_right) == 0:
+            return 0
+
+        n_total = len(y)
+        weight_left = len(y_left) / n_total
+        weight_right = len(y_right) / n_total
+
+        # Return (parent_entropy - child_entropy)
+        child_entropy = (weight_left * self._entropy(y_left)) + (weight_right * self._entropy(y_right))
+        information_gain = parent_entropy - child_entropy
+        return information_gain
+        
 
     def _most_common_label(self, y):
         """
