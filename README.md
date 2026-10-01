@@ -62,6 +62,12 @@ python src/main.py --model decision_tree --data data/play_tennis.csv
 | `--compare` | _Tùy chọn_   | Kích hoạt chế độ so sánh song song. Chế độ này sẽ huấn luyện một mô hình Scikit-Learn tương đương trên cùng tập dữ liệu và in ra bảng so sánh các chỉ số (Accuracy, Precision, Recall, F1-Score).                                 |
 | `--debug`   | _Tùy chọn_   | Kích hoạt `TrainingTracker`. Chế độ này sẽ lưu lại chi tiết từng bước tính toán toán học (như Parent Entropy, Thresholds, và Information Gain) vào một file riêng tại `logs/training_log.txt` mà không làm rối màn hình terminal. |
 
+### Khởi chạy chế độ nâng cao
+
+```bash
+python src/main.py --model decision_tree --data data/play_tennis.csv --compare --debug
+```
+
 ## Tiến độ triển khai (Roadmap)
 
 ### Dự án sẽ lần lượt xây dựng các mô hình sau:
