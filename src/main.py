@@ -1,8 +1,10 @@
 import argparse
 import os
+import numpy as np
 from utils.data_loader import load_data
 from preprocessing.encoders import LabelEncoder
 from utils.metrics import ClassificationMetrics
+from models.decision_tree import DecisionTree
 
 def main():
     parser = argparse.ArgumentParser(description="Run ML Models from Scratch")
@@ -20,9 +22,16 @@ def main():
         print("Execution aborted due to data loading error.")
         return
 
-    # At this point, you would add your LabelEncoder loop for X and y,
+    # At this point, you would add your LabelEncoder loop for x and y,
     # then instantiate your selected model (like Decision Tree) based on args.model,
     # and finally grade it using ClassificationMetrics.
+
+    label_encoder = LabelEncoder()
+    y_encoded = label_encoder.fit_transform(y)
+
+    tree = DecisionTree()
+    dataset_entropy = tree._entropy(y_encoded)
+    print(f"Entropy of dataset: {dataset_entropy}")
 
 if __name__ == "__main__":
     main()
