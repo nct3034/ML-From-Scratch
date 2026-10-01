@@ -1,6 +1,5 @@
 import numpy as np
 from models.base_model import BaseModel
-from utils.logger import TrainingTracker
 
 class Node:
     """
@@ -17,21 +16,11 @@ class DecisionTree(BaseModel):
     """
     Decision Tree Classifier built from scratch.
     """
-    def __init__(self, max_depth=10, min_samples_split=2, debug_mode = False):
+    def __init__(self, max_depth=10, min_samples_split=2):
         self.root = None
         self.max_depth = max_depth
         self.min_samples_splits = min_samples_split
 
-        # Setting debug heading for Decision Tree
-        header = "Depth        | Feature_Col  | Threshold    | Parent_Ent   | IG_Score"
-        
-        # Initial tracker
-        self.tracker = TrainingTracker(
-            debug_mode = debug_mode, 
-            log_file="logs/tree_log.txt", 
-            header=header
-        )
-       
     def fit(self, x, y):
         """
         Public method to start training the tree.

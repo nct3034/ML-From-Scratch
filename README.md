@@ -18,7 +18,6 @@ ML-From-Scratch/
 │   │   └── encoders.py         # Chứa các lớp mã hóa nhãn và tính năng
 │   ├── utils/                  # Các hàm tiện ích (Metrics, Data Loader)
 │   │   ├── data_loader.py      # Script hỗ trợ đọc và tải dữ liệu
-│   │   ├── logger.py           # Bộ theo dõi và ghi log quá trình huấn luyện
 │   │   └── metrics.py          # Các hàm đánh giá hiệu suất mô hình
 │   └── main.py                 # Kịch bản điều phối và khởi chạy dự án
 ├── requirements.txt
@@ -55,17 +54,16 @@ python src/main.py --model MODEL-NAME --data data/DATA-FILE-NAME
 
 ### Các tham số dòng lệnh (Flags)
 
-| Cờ (Flag)   | Loại         | Giải thích                                                                                                                                                                                                                        |
-| :---------- | :----------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--model`   | **Bắt buộc** | Tên của mô hình bạn muốn khởi tạo và chạy (ví dụ: `decision_tree`).                                                                                                                                                               |
-| `--data`    | **Bắt buộc** | Đường dẫn tương đối đến file dữ liệu của bạn (ví dụ: `data/play_tennis.csv`).                                                                                                                                                     |
-| `--compare` | _Tùy chọn_   | Kích hoạt chế độ so sánh song song. Chế độ này sẽ huấn luyện một mô hình Scikit-Learn tương đương trên cùng tập dữ liệu và in ra bảng so sánh các chỉ số (Accuracy, Precision, Recall, F1-Score).                                 |
-| `--debug`   | _Tùy chọn_   | Kích hoạt `TrainingTracker`. Chế độ này sẽ lưu lại chi tiết từng bước tính toán toán học (như Parent Entropy, Thresholds, và Information Gain) vào một file riêng tại `logs/training_log.txt` mà không làm rối màn hình terminal. |
+| Cờ (Flag)   | Loại         | Giải thích                                                                                                                                                                                        |
+| :---------- | :----------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `--model`   | **Bắt buộc** | Tên của mô hình bạn muốn khởi tạo và chạy (ví dụ: `decision_tree`).                                                                                                                               |
+| `--data`    | **Bắt buộc** | Đường dẫn tương đối đến file dữ liệu của bạn (ví dụ: `data/play_tennis.csv`).                                                                                                                     |
+| `--compare` | _Tùy chọn_   | Kích hoạt chế độ so sánh song song. Chế độ này sẽ huấn luyện một mô hình Scikit-Learn tương đương trên cùng tập dữ liệu và in ra bảng so sánh các chỉ số (Accuracy, Precision, Recall, F1-Score). |
 
 ### Khởi chạy chế độ nâng cao
 
 ```bash
-python src/main.py --model MODEL-NAME --data data/DATA-FILE-NAME --compare --debug
+python src/main.py --model MODEL-NAME --data data/DATA-FILE-NAME --compare
 ```
 
 ## Tiến độ triển khai (Roadmap)
@@ -85,7 +83,3 @@ python src/main.py --model MODEL-NAME --data data/DATA-FILE-NAME --compare --deb
 ## Bộ dữ liệu kiểm thử
 
 - **Play Tennis:** Tập dữ liệu phân loại nhỏ (14 mẫu) dùng để debug logic tính toán Toán học (Entropy, Information Gain) và đối chiếu thủ công.
-
-```
-
-```

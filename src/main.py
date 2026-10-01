@@ -11,7 +11,6 @@ def main():
     parser.add_argument("--model", type=str, required=True, help="Name of the model to run (e.g., decision_tree)")
     parser.add_argument("--data", type=str, required=True, help="Path to the dataset (e.g., data/play_tennis.csv)")
     parser.add_argument("--compare", action="store_true", help="Run Scikit-Learn model to compare results")
-    parser.add_argument("--debug", action="store_true", help="Log detailed calculations to a file")
 
     args = parser.parse_args()
     print("========================================")
