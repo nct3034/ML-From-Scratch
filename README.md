@@ -50,7 +50,7 @@ Bạn có thể chạy các mô hình học máy trực tiếp từ terminal th�
 Để huấn luyện và đánh giá một mô hình trên một tập dữ liệu cụ thể, hãy sử dụng câu lệnh sau:
 
 ```bash
-python src/main.py --model decision_tree --data data/play_tennis.csv
+python src/main.py --model MODEL-NAME --data data/DATA-FILE-NAME
 ```
 
 ### Các tham số dòng lệnh (Flags)
@@ -65,7 +65,7 @@ python src/main.py --model decision_tree --data data/play_tennis.csv
 ### Khởi chạy chế độ nâng cao
 
 ```bash
-python src/main.py --model decision_tree --data data/play_tennis.csv --compare --debug
+python src/main.py --model MODEL-NAME --data data/DATA-FILE-NAME --compare --debug
 ```
 
 ## Tiến độ triển khai (Roadmap)
