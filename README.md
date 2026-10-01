@@ -7,15 +7,20 @@ Mục tiêu cốt lõi không phải là tạo ra một thư viện nhanh nhất
 ## Cấu trúc dự án
 
 ```text
-ML-From_Scratch/
+ML-From-Scratch/
 ├── data/                       # Các tập dữ liệu
+│   └── play_tennis.csv         # Tập dữ liệu mẫu
 ├── src/
 │   ├── models/                 # Chứa các thuật toán tự triển khai
 │   │   ├── base_model.py       # Lớp trừu tượng định nghĩa .fit() và .predict()
-│   │   └── ...
+│   │   └── decision_tree.py    # Thuật toán Cây quyết định (Decision Tree)
 │   ├── preprocessing/          # Module xử lý dữ liệu (Label Encoding, Scaling)
+│   │   └── encoders.py         # Chứa các lớp mã hóa nhãn và tính năng
 │   ├── utils/                  # Các hàm tiện ích (Metrics, Data Loader)
-│   └── main.py                 # Kịch bản điều phối và so sánh các mô hình
+│   │   ├── data_loader.py      # Script hỗ trợ đọc và tải dữ liệu
+│   │   ├── logger.py           # Bộ theo dõi và ghi log quá trình huấn luyện
+│   │   └── metrics.py          # Các hàm đánh giá hiệu suất mô hình
+│   └── main.py                 # Kịch bản điều phối và khởi chạy dự án
 ├── requirements.txt
 └── README.md
 ```
@@ -38,13 +43,24 @@ Khuyến nghị sử dụng môi trường ảo (Virtual Environment) để trá
 
 ## Hướng dẫn sử dụng
 
-Chạy kịch bản chính để kiểm thử và so sánh một mô hình cụ thể. (Phần này sẽ được cập nhật khi hoàn thiện tính năng truyền tham số CLI).
+Bạn có thể chạy các mô hình học máy trực tiếp từ terminal thông qua file `main.py`. Dự án sử dụng giao diện dòng lệnh (CLI) để quản lý các mô hình, tập dữ liệu và các chế độ thực thi khác nhau.
 
-Ví dụ dự kiến:
+### Khởi chạy cơ bản
+
+Để huấn luyện và đánh giá một mô hình trên một tập dữ liệu cụ thể, hãy sử dụng câu lệnh sau:
 
 ```bash
 python src/main.py --model decision_tree --data data/play_tennis.csv
 ```
+
+### Các tham số dòng lệnh (Flags)
+
+| Cờ (Flag)   | Loại         | Giải thích                                                                                                                                                                                                                        |
+| :---------- | :----------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--model`   | **Bắt buộc** | Tên của mô hình bạn muốn khởi tạo và chạy (ví dụ: `decision_tree`).                                                                                                                                                               |
+| `--data`    | **Bắt buộc** | Đường dẫn tương đối đến file dữ liệu của bạn (ví dụ: `data/play_tennis.csv`).                                                                                                                                                     |
+| `--compare` | _Tùy chọn_   | Kích hoạt chế độ so sánh song song. Chế độ này sẽ huấn luyện một mô hình Scikit-Learn tương đương trên cùng tập dữ liệu và in ra bảng so sánh các chỉ số (Accuracy, Precision, Recall, F1-Score).                                 |
+| `--debug`   | _Tùy chọn_   | Kích hoạt `TrainingTracker`. Chế độ này sẽ lưu lại chi tiết từng bước tính toán toán học (như Parent Entropy, Thresholds, và Information Gain) vào một file riêng tại `logs/training_log.txt` mà không làm rối màn hình terminal. |
 
 ## Tiến độ triển khai (Roadmap)
 
@@ -63,3 +79,7 @@ python src/main.py --model decision_tree --data data/play_tennis.csv
 ## Bộ dữ liệu kiểm thử
 
 - **Play Tennis:** Tập dữ liệu phân loại nhỏ (14 mẫu) dùng để debug logic tính toán Toán học (Entropy, Information Gain) và đối chiếu thủ công.
+
+```
+
+```
